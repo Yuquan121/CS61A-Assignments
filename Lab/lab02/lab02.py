@@ -1,4 +1,3 @@
-
 def composite_identity(f, g):
     """
     Return a function with one parameter x that returns True if f(g(x)) is
@@ -14,6 +13,14 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
+    # def h(x):
+    #     if f(g(x)) == g(f(x)):
+    #         return True
+    #     else:
+    #         return False
+    # return h
+
+    return lambda x: f(g(x)) == g(f(x))
 
 
 def sum_digits(y):
@@ -22,6 +29,7 @@ def sum_digits(y):
     while y > 0:
         total, y = total + y % 10, y // 10
     return total
+
 
 def is_prime(n):
     """Return whether positive integer n is prime."""
@@ -33,6 +41,7 @@ def is_prime(n):
             return False
         k += 1
     return True
+
 
 def count_cond(condition):
     """Returns a function with one parameter N that counts all the numbers from
@@ -60,6 +69,13 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
+    def counter(n):
+        count = 0
+        for i in range(1,n + 1):
+            if condition(n,i):
+                count += 1
+        return count
+    return counter
 
 
 def multiple(a, b):
@@ -71,7 +87,12 @@ def multiple(a, b):
     42
     """
     "*** YOUR CODE HERE ***"
+    def gcd(a, b):
+        if b == 0:
+            return a
+        return gcd(b, a % b)
 
+    return a * b // gcd(a, b)
 
 
 def cycle(f1, f2, f3):
@@ -101,4 +122,12 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-
+    def make_cycle(n):
+        def composed(x):
+            current = x
+            for i in range(n):
+                func = [f1, f2, f3][i % 3]
+                current = func(current)
+            return current
+        return composed
+    return make_cycle
